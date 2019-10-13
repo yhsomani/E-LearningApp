@@ -96,8 +96,8 @@ public class DashboardAcitivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
-        editor.commit();
-        startActivity(new Intent(this,login.class));
+        editor.apply();
+        startActivity(new Intent(this,LoginActivity.class));
         finish();
     }
 
