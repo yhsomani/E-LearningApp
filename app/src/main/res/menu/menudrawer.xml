@@ -4,5 +4,5 @@
     <item android:id="@+id/explore" android:title="Explore" android:icon="@drawable/explore"/>
     <item android:id="@+id/recommend" android:title="Recommend" android:icon="@drawable/recommend"/>
     <item android:id="@+id/profile" android:title="Profile" android:icon="@drawable/user"/>
-
+        <item android:id="@+id/logoutId" android:title="Log Out" android:icon="@drawable/logout"/>
 </menu>

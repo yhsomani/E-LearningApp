@@ -1,5 +1,6 @@
 package androiddev.com.elearning;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -51,7 +52,7 @@ public class login extends AppCompatActivity {
         editor.apply();
         Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
 
-        Intent intent=new Intent(this,login.class);
+        Intent intent=new Intent(this,DashboardAcitivity.class);
         startActivity(intent);
         finish();
     }
@@ -66,6 +67,11 @@ public class login extends AppCompatActivity {
         JSONObject postJson=new JSONObject(creds);
         Toast.makeText(this, postJson.toString(), Toast.LENGTH_SHORT).show();
         String url="https://apj-learning.herokuapp.com/signin";
+        //making progress bar
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
+        // progress bar ends here
         JsonObjectRequest objectRequest =new JsonObjectRequest(Request.Method.POST, url, postJson, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -74,11 +80,13 @@ public class login extends AppCompatActivity {
                     FirstName=response.getString("FirstName");
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    progressDialog.dismiss();
                 }
                 try {
                     LastName=response.getString("LastName");
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    progressDialog.dismiss();
                 }
                 Toast.makeText(login.this, response.toString(), Toast.LENGTH_SHORT).show();
                 if(FirstName.length()!=0 && LastName.length()!=0){
@@ -88,7 +96,8 @@ public class login extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(MainActivity.this, "Error from Volley", Toast.LENGTH_SHORT).show();
+                Toast.makeText(login.this, "Error from Volley", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
         });
         queue.add(objectRequest);
